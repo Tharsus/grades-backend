@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "dataInicio": "2014-02-01T09:28:56.321-10:00",
+    "dataInicio": "2020-09-21T17:20:35.568Z",
     "abrangencia": "CF",
     "regional": "BX",
     "coordenacao": "NI",
@@ -9,18 +9,18 @@
   },
   {
     "id": 2,
-    "dataInicio": "2014-02-01T09:28:56.321-10:00",
+    "dataInicio": "2020-09-21T17:20:35.568Z",
     "abrangencia": "CF",
     "regional": "BX",
-    "coordenacao": "TI",
+    "coordenacao": "NI",
     "tipoServico": "RC08"
   },
   {
     "id": 3,
-    "dataInicio": "2014-02-01T09:28:56.321-10:00",
+    "dataInicio": "2020-09-21T17:20:35.568Z",
     "abrangencia": "CF",
     "regional": "BX",
-    "coordenacao": "TI",
+    "coordenacao": "NI",
     "tipoServico": "RC08"
   }
 ]

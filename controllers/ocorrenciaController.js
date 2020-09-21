@@ -1,6 +1,6 @@
 // import { logger } from '../config/logger.js';
-import { promises as fs } from 'fs';
 import formidable from 'formidable';
+import * as fs from 'fs';
 
 const upload = async (req, res) => {
   let regional = '',
@@ -20,13 +20,16 @@ const upload = async (req, res) => {
       form
         .parse(req)
         .on('file', function (_, file) {
-          console.log('Got file:', file.name);
+          // console.log('Got file:', file.name);
+          if (numberOfFiles >= 1) {
+            reject('This method only allows the upload of a single file.');
+          }
           oldPath = file.path;
           fileName = file.name;
           numberOfFiles++;
         })
         .on('field', function (name, field) {
-          console.log('Got a field:', name);
+          // console.log('Got a field:', name);
           switch (name) {
             case 'regional':
               regional = field;
@@ -57,24 +60,52 @@ const upload = async (req, res) => {
         'Missing one of the following mandatory fields: regional, periodo and/or id'
       );
 
-    if (numberOfFiles !== 1) throw new Error('Number of files must be one.');
+    if (numberOfFiles !== 1) throw new Error('Missing file in the request.');
 
     const destinationFolder =
       process.cwd() + `\\ocorrencias\\${periodo}\\${regional}\\${id}\\`;
-    // console.log(destinationFolder);
 
+    // create the directory it it doesn't exist
     try {
-      await fs.mkdir(destinationFolder, { recursive: true });
+      fs.mkdirSync(destinationFolder, { recursive: true });
     } catch (err) {
       res.status(404).send(err);
     }
 
     newPath = destinationFolder + fileName;
-    console.log(newPath);
 
-    await fs.rename(oldPath, newPath, function (err) {
-      if (err) throw err;
-    });
+    //check if file exists
+    try {
+      fs.accessSync(newPath);
+      // file with same name exists
+
+      // insert (1) in the end if file already exist
+      let fileNameDivided = fileName.split('.');
+      let index = 1;
+      while (true) {
+        let fileNameJoin = fileNameDivided[0];
+        for (let i = 1; i < fileNameDivided.length; i++) {
+          if (i === fileNameDivided.length - 1) {
+            fileNameJoin += `(${index}).${fileNameDivided[i]}`;
+          } else {
+            fileNameJoin += '.' + fileNameDivided[i];
+          }
+        }
+
+        newPath = destinationFolder + fileNameJoin;
+
+        fs.accessSync(newPath);
+        index++;
+      }
+    } catch (err) {
+      // file with same name doesn't exist
+    }
+
+    try {
+      fs.renameSync(oldPath, newPath);
+    } catch (err) {
+      res.status(404).send(err);
+    }
 
     res.send({ Success: 'File uploaded and moved!' });
   } catch (err) {
@@ -88,7 +119,7 @@ const findAll = async (_, res) => {
   const currentFolder = process.cwd();
   try {
     const ocorrencias = JSON.parse(
-      await fs.readFile(currentFolder + '//ocorrencias//ocorrencias.json')
+      fs.readFileSync(currentFolder + '//ocorrencias//ocorrencias.json')
     );
 
     res.send(ocorrencias);
