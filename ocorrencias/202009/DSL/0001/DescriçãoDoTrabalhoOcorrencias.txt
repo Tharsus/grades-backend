@@ -1,0 +1,8 @@
+armazenar os últimos 2 meses
+
+buscar e subir arquivo
+
+repositórios de ocorrências
+anexa a imagem do GPS
+Sobe emeg
+ocorrência = inteiro longo (8 dígitos)

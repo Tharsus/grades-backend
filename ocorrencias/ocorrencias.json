@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "dataInicio": "2014-02-01T09:28:56.321-10:00",
+    "abrangencia": "CF",
+    "regional": "BX",
+    "coordenacao": "NI",
+    "tipoServico": "RC08"
+  },
+  {
+    "id": 2,
+    "dataInicio": "2014-02-01T09:28:56.321-10:00",
+    "abrangencia": "CF",
+    "regional": "BX",
+    "coordenacao": "TI",
+    "tipoServico": "RC08"
+  },
+  {
+    "id": 3,
+    "dataInicio": "2014-02-01T09:28:56.321-10:00",
+    "abrangencia": "CF",
+    "regional": "BX",
+    "coordenacao": "TI",
+    "tipoServico": "RC08"
+  }
+]
